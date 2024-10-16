@@ -1,8 +1,9 @@
 #include "../HDR/hdr.h"
 #include "server_function.h"
 #include "loggers.h"
+#include "sf_displayFileContents.c"
 #include "sf_searchForFile.c"
-
+#include "sf_searchForString.c"
 
 int main() {
 
@@ -56,8 +57,29 @@ int main() {
                 send(clientSocket, result, sizeof(result), 0);
                 break;
 
-           
             case 2:
+                recv(clientSocket, buffer, sizeof(buffer), 0);
+                searchForString(buffer, result);
+                send(clientSocket, result, sizeof(result), 0);
+                if (strcmp(result, "") == 0) {
+                    break;
+                }
+                strcpy(result, "");
+                recv(clientSocket, buffer, sizeof(buffer), 0);
+                if (strcmp(buffer, "") == 0) {
+                    break;
+                }
+                displayFileContent(buffer, result);
+                send(clientSocket, result, sizeof(result), 0);
+                break;
+
+            case 3:
+                 recv(clientSocket, buffer, sizeof(buffer), 0);
+                displayFileContent(buffer, result);
+                send(clientSocket, result, sizeof(result), 0);
+                break;
+
+            case 4:
                 LOG_INFO("Exiting execution %s", "");
                 close(clientSocket);
                 close(serverSocket);
@@ -76,5 +98,4 @@ int main() {
 
     return 0;
 }
-                
-
+  
