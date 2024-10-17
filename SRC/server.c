@@ -1,9 +1,9 @@
-#include "../HDR/hdr.h"
-#include "server_function.h"
-#include "loggers.h"
-#include "sf_displayFileContents.c"
-#include "sf_searchForFile.c"
-#include "sf_searchForString.c"
+#include "../INC/hdr.h"
+#include "../INC/server_function.h"
+#include "../INC/loggers.h"
+#include "../INC/sf_displayFileContents.h"
+#include "../INC/sf_searchForFile.h"
+#include "../INC/sf_searchForString.h"
 
 int main() {
 
@@ -19,7 +19,7 @@ int main() {
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
-    serverAddr.sin_port = htons(5678);
+    serverAddr.sin_port = htons(5679);
 
     if (bind(serverSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == -1) {
         LOG_FATAL("Bind failed %s", "");
@@ -32,7 +32,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    LOG_INFO("Server listening on port %s...", "5678");
+    LOG_INFO("Server listening on port %s...", "5679");
     int clientSocket = accept(serverSocket, NULL, NULL);
     if (clientSocket == -1) {
         LOG_FATAL("Accept failed %s", "");

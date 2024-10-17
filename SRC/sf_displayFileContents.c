@@ -1,3 +1,6 @@
+#include "../INC/hdr.h"
+#include "../INC/loggers.h"
+
 void displayFileContent(char* filePath, char* result) {
     LOG_INFO("Reading contents of file - %s", filePath);
     FILE* file = fopen(filePath, "r");

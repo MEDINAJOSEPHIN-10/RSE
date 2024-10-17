@@ -1,3 +1,6 @@
+#include "../INC/hdr.h"
+#include "../INC/loggers.h"
+
 void searchForFile(char* filePath, char* result) {
     LOG_INFO("Searching for a file in filesystem with filePath - %s", filePath);
     FILE* file = fopen(filePath, "r");

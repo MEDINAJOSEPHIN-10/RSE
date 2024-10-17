@@ -1,3 +1,5 @@
+#include "../INC/hdr.h"
+#include "../INC/loggers.h"
 void searchInFile(const char* filePath, const char* searchString, char* result) {
     FILE* file = fopen(filePath, "r");
     if (file != NULL) {
@@ -42,6 +44,6 @@ void searchInDirectory(const char* dirPath, const char* searchString, char* resu
 
 void searchForString(const char* searchString, char* result) {
     LOG_INFO("Searching for the string '%s' in the filesystem", searchString);
-    searchInDirectory("/home2/user29/", searchString, result);
+    searchInDirectory("/home2/user29", searchString, result);
 }
 

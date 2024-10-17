@@ -1,9 +1,9 @@
-#include "../HDR/hdr.h"
-#include "server_function.h"
-#include "loggers.h"
-#include "sf_displayFileContents.c"
-#include "sf_searchForFile.c"
-#include "sf_searchForString.c"
+#include "../INC/hdr.h"
+#include "../INC/server_function.h"
+#include "../INC/loggers.h"
+#include "../INC/sf_displayFileContents.h"
+#include "../INC/sf_searchForFile.h"
+#include "../INC/sf_searchForString.h"
 
 
 int main() {
@@ -18,7 +18,7 @@ int main() {
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");  // Server IP address
-    serverAddr.sin_port = htons(5678);                     // Server port
+    serverAddr.sin_port = htons(5679);                     // Server port
 
     if (connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == -1) {
         perror("Connection failed");
@@ -29,12 +29,17 @@ int main() {
     char buffer[MAX_BUFFER_SIZE];
 
     while (1) {
-
+		printf("\n");
+		printf("***********************************************************\n");
         printf("Options:\n");
+		printf("***********************************************************\n");
+		printf("\n");
         printf("1. Search for a file\n");
         printf("2. Search for a string in the filesystem\n");
-        printf("3. Display the content of a file\n");
+        printf("3. Enter the absolute path and Display the content\n");
         printf("4. Exit\n");
+		printf("************************************************************\n");
+		printf("\n");
         printf("Enter your choice: ");
         
         scanf("%d", &choice);
@@ -43,18 +48,12 @@ int main() {
 
         switch (choice) {
             case 1: ;
-              /*  int case1SubChoice = 0;
-                printf("    1. Enter with path\n");
-                printf("    2. Enter without path\n");
-                printf("    Enter Choice: ");
-                scanf("%d", &case1SubChoice);
-                getchar();
-				*/
+              
                 char basePath[MAX_BUFFER_SIZE] = "";
                 printf("Enter the absolute path: ");
-               // if (case1SubChoice == 2) {
-                    strcat(basePath, "/home2/user29/");
-               // }
+               
+                    strcat(basePath, "");
+                
                 scanf("%s", buffer);
                 strcat(basePath, buffer);
                 send(clientSocket, basePath, sizeof(buffer), 0);
@@ -72,14 +71,15 @@ int main() {
                     printf("This string was not found in any file\n\n");
                     break;
                 }
-                int case2SubChoice = 0;
-                printf("    1. View a file\n");
-                printf("    2. Do not view file\n");
-                printf("    Enter Choice: ");
+                char case2SubChoice[5];
+				printf("\n");
+                printf("    View a file\n");
+                //printf("    2. Do not view file\n");
+                printf("    Enter YES or NO: ");
 
-                scanf("%d", &case2SubChoice);
+                scanf("%s", case2SubChoice);
                 getchar();
-                if (case2SubChoice == 1) {
+                if (strcmp(case2SubChoice ,  "YES") == 0) {
                     printf("    Enter the path: ");
                     scanf("%[^\n]s", buffer);
                     send(clientSocket, buffer, sizeof(buffer), 0);
