@@ -27,7 +27,7 @@ void* handleClient(void* clientSocketPtr) {
             case 1:
                 recv(clientSocket, buffer, sizeof(buffer), 0);
                 pthread_mutex_lock(&fileMutex); // Lock the mutex before accessing shared resources
-                searchForFile(buffer, result);
+                searchForFile(buffer, result);  // Safely access shared resources
                 pthread_mutex_unlock(&fileMutex); // Unlock the mutex after done
                 send(clientSocket, result, sizeof(result), 0);
                 break;
@@ -35,7 +35,7 @@ void* handleClient(void* clientSocketPtr) {
             case 2:
                 recv(clientSocket, buffer, sizeof(buffer), 0);
                 pthread_mutex_lock(&fileMutex); // Lock the mutex before accessing shared resources
-                searchForString(buffer, result);
+                searchForString(buffer, result);  // Safely access shared resources
                 pthread_mutex_unlock(&fileMutex); // Unlock the mutex after done
                 send(clientSocket, result, sizeof(result), 0);
                 if (strcmp(result, "") == 0) {
@@ -46,7 +46,7 @@ void* handleClient(void* clientSocketPtr) {
                     break;
                 }
                 pthread_mutex_lock(&fileMutex); // Lock the mutex before accessing shared resources
-                displayFileContent(buffer, result);
+                displayFileContent(buffer, result);  // Safely access shared resources
                 pthread_mutex_unlock(&fileMutex); // Unlock the mutex after done
                 send(clientSocket, result, sizeof(result), 0);
                 break;
@@ -54,7 +54,7 @@ void* handleClient(void* clientSocketPtr) {
             case 3:
                 recv(clientSocket, buffer, sizeof(buffer), 0);
                 pthread_mutex_lock(&fileMutex); // Lock the mutex before accessing shared resources
-                displayFileContent(buffer, result);
+                displayFileContent(buffer, result);  // Safely access shared resources
                 pthread_mutex_unlock(&fileMutex); // Unlock the mutex after done
                 send(clientSocket, result, sizeof(result), 0);
                 break;
@@ -88,7 +88,7 @@ int main() {
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
-    serverAddr.sin_port = htons(5679);
+    serverAddr.sin_port = htons(5680);
 
     if (bind(serverSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == -1) {
         LOG_FATAL("Bind failed %s", "");
@@ -100,7 +100,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    LOG_INFO("Server listening on port %s...", "5679");
+    LOG_INFO("Server listening on port %s...", "5680");
 
     while (1) {
         int* clientSocketPtr = malloc(sizeof(int)); // Allocate memory for clientSocket

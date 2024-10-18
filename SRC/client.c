@@ -18,7 +18,7 @@ int main() {
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");  // Server IP address
-    serverAddr.sin_port = htons(5679);                     // Server port
+    serverAddr.sin_port = htons(5680);                     // Server port
 
     if (connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == -1) {
         perror("Connection failed");
