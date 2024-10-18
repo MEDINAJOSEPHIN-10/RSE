@@ -32,24 +32,40 @@ void* handleClient(void* clientSocketPtr) {
                 send(clientSocket, result, sizeof(result), 0);
                 break;
 
-            case 2:
-                recv(clientSocket, buffer, sizeof(buffer), 0);
-                pthread_mutex_lock(&fileMutex); // Lock the mutex before accessing shared resources
-                searchForString(buffer, result);  // Safely access shared resources
-                pthread_mutex_unlock(&fileMutex); // Unlock the mutex after done
-                send(clientSocket, result, sizeof(result), 0);
-                if (strcmp(result, "") == 0) {
-                    break;
-                }
-                recv(clientSocket, buffer, sizeof(buffer), 0);
-                if (strcmp(buffer, "") == 0) {
-                    break;
-                }
-                pthread_mutex_lock(&fileMutex); // Lock the mutex before accessing shared resources
-                displayFileContent(buffer, result);  // Safely access shared resources
-                pthread_mutex_unlock(&fileMutex); // Unlock the mutex after done
-                send(clientSocket, result, sizeof(result), 0);
-                break;
+     case 2:
+    // Receive the string to search
+    if (recv(clientSocket, buffer, sizeof(buffer), 0) <= 0) {
+        LOG_WARN("Failed to receive search string from client %s", "");
+        break;
+    }
+    pthread_mutex_lock(&fileMutex);
+    searchForString(buffer, result);  // Search for the string
+    pthread_mutex_unlock(&fileMutex);
+    
+    // Send the result of the search
+    send(clientSocket, result, sizeof(result), 0);
+    if (strcmp(result, "") == 0) {
+        LOG_INFO("No results found for search string %s", buffer);
+        break;
+    }
+
+    // Receive the path to display
+    if (recv(clientSocket, buffer, sizeof(buffer), 0) <= 0) {
+        LOG_WARN("Failed to receive file path from client %s", "");
+        break;
+    }
+    if (strcmp(buffer, "") == 0) {
+        LOG_WARN("Received empty path from client %s", "");
+        break;
+    }
+
+    // Display file content
+    pthread_mutex_lock(&fileMutex);
+    displayFileContent(buffer, result);
+    pthread_mutex_unlock(&fileMutex);
+    send(clientSocket, result, sizeof(result), 0);
+    break;
+
 
             case 3:
                 recv(clientSocket, buffer, sizeof(buffer), 0);
@@ -125,5 +141,4 @@ int main() {
     pthread_mutex_destroy(&fileMutex); // Destroy the mutex when done
     close(serverSocket);
     return 0;
-}
-
+} 
