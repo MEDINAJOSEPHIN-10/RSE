@@ -9,7 +9,7 @@ OBJDIR = ../OBJ
 # Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Wextra -g
-LDFLAGS =
+LDFLAGS = -pthread
 
 # Targets
 all: $(BINDIR)/server $(BINDIR)/client
