@@ -1,3 +1,16 @@
+/****************************************************************************
+*	FILENAME: sf_searchForString.c
+*	DESCRIPTION: Contains functions to search for a specific string in files 
+*	            within a directory and its subdirectories. It utilizes 
+*	            recursion to navigate through directories and logs the search 
+*	            results. If the string is found, the corresponding file path 
+*	            is appended to the result buffer; if not found or if errors 
+*	            occur, appropriate messages are logged.
+*****************************************************************************/
+
+
+
+
 #include "../INC/hdr.h"
 #include "../INC/loggers.h"
 void searchInFile(const char* filePath, const char* searchString, char* result) {

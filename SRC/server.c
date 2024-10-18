@@ -1,3 +1,15 @@
+/****************************************************************************
+*	FILENAME: server.c
+*	DESCRIPTION: Contains the implementation of a multi-threaded server that 
+*	            handles client requests for searching files and displaying 
+*	            file contents. Each client is processed in a separate thread, 
+*	            with synchronization provided by a mutex to manage access 
+*	            to shared resources. The server listens on a specified port 
+*	            and supports multiple operations based on client choices.
+*****************************************************************************/
+
+
+
 #include "../INC/hdr.h"
 #include "../INC/server_function.h"
 #include "../INC/loggers.h"

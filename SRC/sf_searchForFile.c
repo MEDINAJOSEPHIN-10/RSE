@@ -1,3 +1,13 @@
+/****************************************************************************
+*	FILENAME: sf_searchForFile.c
+*	DESCRIPTION: Contains the code to search for a file in the filesystem 
+*	            based on the provided file path. If the file exists, 
+*	            it appends a confirmation message to the result buffer; 
+*	            if not, it logs an error and stores an appropriate message.
+*****************************************************************************/
+
+
+
 #include "../INC/hdr.h"
 #include "../INC/loggers.h"
 

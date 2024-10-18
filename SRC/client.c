@@ -1,3 +1,18 @@
+/***************************************************************************
+*	FILENAME : client.c
+*	DESCRIPTION: Contains code for a client that connects to a server 
+*               to perform various file operations, including searching for 
+*               a file, searching for a string within files, and displaying 
+*               file contents. The client communicates with the server via 
+*               socket programming and presents options to the user through 
+*               a console interface.
+*****************************************************************************/
+
+
+
+
+
+
 #include "../INC/hdr.h"
 #include "../INC/server_function.h"
 #include "../INC/loggers.h"
@@ -31,8 +46,9 @@ int main() {
     while (1) {
 		printf("\n");
 		printf("***********************************************************\n");
-        printf("Options:\n");
-		printf("***********************************************************\n");
+		printf("                   REMOTE SEARCH ENGINE                    \n");
+        printf("***********************************************************\n");
+		printf("Choose an Option:\n");
 		printf("\n");
         printf("1. Search for a file\n");
         printf("2. Search for a string in the filesystem\n");
