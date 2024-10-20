@@ -69,4 +69,3 @@ void test_searchForFile_invalidPath(void) {
     searchForFile("invalid_path/file.txt", result);  // Ensure this path is invalid
     CU_ASSERT_STRING_EQUAL(result, "No, the file does not exist!");  // Expecting this output
 }
-
