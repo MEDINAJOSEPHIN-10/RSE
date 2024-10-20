@@ -1,4 +1,6 @@
 /****************************************************************************
+*   DATE :
+*   AUTHOR : Group-04
 *	FILENAME: server.c
 *	DESCRIPTION: Contains the implementation of a multi-threaded server that 
 *	            handles client requests for searching files and displaying 

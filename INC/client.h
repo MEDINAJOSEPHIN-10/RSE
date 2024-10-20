@@ -1,3 +1,18 @@
+/****************************************************************************
+*   DATE :
+*   AUTHOR :Group-04
+*   FILENAME: client.h
+*   DESCRIPTION: This header file contains declarations for functions used
+*                in the client-side of a client-server application. It includes
+*                the declaration of the function connectToServer, which is 
+*                responsible for creating a socket and establishing a 
+*                connection to the server. Additionally, it provides the 
+*                declaration of the handleChoice function, which processes 
+*                user input and manages the corresponding actions based 
+*                on the user's selections.
+ ****************************************************************************/
+
+
 #ifndef CLIENT_H
 #define CLIENT_H
 

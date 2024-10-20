@@ -1,7 +1,21 @@
+/****************************************************************************
+*   DATE :
+*   AUTHOR :Group-04
+*   FILENAME: sf_searchForFile.h
+*   DESCRIPTION: This header file contains the declaration of the function
+*                searchForFile, which is responsible for searching for a
+*                specific file in the filesystem based on a provided file
+*                path. The function checks for the existence of the file 
+*                and appends the appropriate confirmation message to a 
+*                result buffer. It is designed to assist with file 
+*                management tasks in a client-server application.
+ ****************************************************************************/
+
+
 #ifndef SF_SEARCH_FOR_FILE_H
 #define SF_SEARCH_FOR_FILE_H
 
-void searchForFile(const char* filePath, char* result);
+void searchForFile(char* filePath, char* result);
 
 #endif
 

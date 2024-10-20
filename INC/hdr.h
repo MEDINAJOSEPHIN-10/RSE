@@ -1,4 +1,6 @@
 /***************************************************************************
+*   DATE : 
+*   AUTHOR : Group-04
 *	FILENAME : hdr.h
 *	DESCRIPTION: Contains utility functions for socket programming, 
 *                including handling sockets, directories, and buffers. 

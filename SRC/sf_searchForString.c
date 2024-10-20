@@ -1,4 +1,6 @@
-/****************************************************************************
+/***************************************************************************
+*   DATE :
+*   AUTHOR : GROUP-04
 *	FILENAME: sf_searchForString.c
 *	DESCRIPTION: Contains functions to search for a specific string in files 
 *	            within a directory and its subdirectories. It utilizes 

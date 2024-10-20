@@ -1,4 +1,6 @@
 /****************************************************************************
+*   DATE :
+*   AUTHOR : GROUP-04
 *	FILENAME: sf_searchForFile.c
 *	DESCRIPTION: Contains the code to search for a file in the filesystem 
 *	            based on the provided file path. If the file exists, 

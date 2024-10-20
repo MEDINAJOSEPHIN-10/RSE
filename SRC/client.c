@@ -1,4 +1,6 @@
 /***************************************************************************
+*   DATE:
+*   AUTHOR : Group-04
 *	FILENAME : client.c
 *	DESCRIPTION: Contains code for a client that connects to a server 
 *               to perform various file operations, including searching for 
@@ -7,11 +9,6 @@
 *               socket programming and presents options to the user through 
 *               a console interface.
 *****************************************************************************/
-
-
-
-
-
 
 #include "../INC/hdr.h"
 #include "../INC/server_function.h"

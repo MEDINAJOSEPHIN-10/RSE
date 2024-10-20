@@ -1,6 +1,8 @@
-/***************************************************************************
+ /***************************************************************************
+*   DATE:
+*   AUTHOR: Group-04
 *	FILENAME : sf_displayFileContents.c
-*	DESCRIPTION:Contains the code to read the contents of a file from the
+*	DESCRIPTION: Contains the code to read the contents of a file from the
 *	            given file path and store them in a result buffer.
 *	            If the file exists, the content is appended to the result;
 *	            otherwise, an error message is stored in the buffer.

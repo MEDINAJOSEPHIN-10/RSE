@@ -1,4 +1,6 @@
 #***************************************************************************
+#   DATE :
+#   AUTHOR : Group-04
 #   FILENAME : make_file
 #   DESCRIPTION: This Makefile is used to compile and link the server and 
 #                 client programs for a socket-based application. It defines 
