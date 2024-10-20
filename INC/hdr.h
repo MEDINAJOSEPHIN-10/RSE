@@ -16,5 +16,5 @@
 #include <arpa/inet.h>        // Definitions for internet operations
 #include <dirent.h>           // Directory entry definitions
 #include <sys/socket.h>       // Main structures for sockets
-
+#include <ctype.h>
 #define MAX_BUFFER_SIZE 1024   // Define a constant for the maximum buffer size
