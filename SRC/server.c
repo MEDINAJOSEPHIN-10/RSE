@@ -1,17 +1,3 @@
-/****************************************************************************
-*   DATE :
-*   AUTHOR : Group-04
-*	FILENAME: server.c
-*	DESCRIPTION: Contains the implementation of a multi-threaded server that 
-*	            handles client requests for searching files and displaying 
-*	            file contents. Each client is processed in a separate thread, 
-*	            with synchronization provided by a mutex to manage access 
-*	            to shared resources. The server listens on a specified port 
-*	            and supports multiple operations based on client choices.
-*****************************************************************************/
-
-
-
 #include "../INC/hdr.h"
 #include "../INC/server_function.h"
 #include "../INC/loggers.h"
@@ -20,94 +6,102 @@
 #include "../INC/sf_searchForString.h"
 #include <pthread.h>
 
-// Mutex for synchronizing file access
-pthread_mutex_t fileMutex;
+#define MAX_CLIENTS 10
+#define MAX_BUFFER_SIZE 1024
 
+pthread_mutex_t client_count_lock;
+int active_clients = 0;
+
+// Function to handle each client in a separate thread
 void* handleClient(void* clientSocketPtr) {
-    int clientSocket = *((int*)clientSocketPtr);
-    free(clientSocketPtr); // Free the allocated memory for clientSocket
-    char buffer[MAX_BUFFER_SIZE] = "";
-    char result[MAX_BUFFER_SIZE] = "";
+    int clientSocket = *(int*)clientSocketPtr;
+    free(clientSocketPtr);  // Free the pointer after use
+
+    char buffer[MAX_BUFFER_SIZE] = {0};
+    char result[MAX_BUFFER_SIZE] = {0};
 
     while (1) {
         int choice;
-        if (recv(clientSocket, &choice, sizeof(choice), 0) <= 0) {
+
+        // Receive client choice
+        ssize_t recvBytes = recv(clientSocket, &choice, sizeof(choice), 0);
+        if (recvBytes <= 0) {
             LOG_WARN("Client disconnected %s", "");
             break;
         }
-        LOG_INFO("Choice of client - %d", choice);
+
+        LOG_INFO("Client's choice: %d", choice);
 
         switch (choice) {
-            case 1:
+            case 1:  // Search for a file
+                memset(buffer, 0, sizeof(buffer));  // Clear buffer before receiving data
                 recv(clientSocket, buffer, sizeof(buffer), 0);
-                pthread_mutex_lock(&fileMutex); // Lock the mutex before accessing shared resources
-                searchForFile(buffer, result);  // Safely access shared resources
-                pthread_mutex_unlock(&fileMutex); // Unlock the mutex after done
+
+                memset(result, 0, sizeof(result));  // Clear result before use
+                searchForFile(buffer, result);
+
                 send(clientSocket, result, sizeof(result), 0);
                 break;
 
-     case 2:
-    // Receive the string to search
-    if (recv(clientSocket, buffer, sizeof(buffer), 0) <= 0) {
-        LOG_WARN("Failed to receive search string from client %s", "");
-        break;
-    }
-    pthread_mutex_lock(&fileMutex);
-    searchForString(buffer, result);  // Search for the string
-    pthread_mutex_unlock(&fileMutex);
-    
-    // Send the result of the search
-    send(clientSocket, result, sizeof(result), 0);
-    if (strcmp(result, "") == 0) {
-        LOG_INFO("No results found for search string %s", buffer);
-        break;
-    }
-
-    // Receive the path to display
-    if (recv(clientSocket, buffer, sizeof(buffer), 0) <= 0) {
-        LOG_WARN("Failed to receive file path from client %s", "");
-        break;
-    }
-    if (strcmp(buffer, "") == 0) {
-        LOG_WARN("Received empty path from client %s", "");
-        break;
-    }
-
-    // Display file content
-    pthread_mutex_lock(&fileMutex);
-    displayFileContent(buffer, result);
-    pthread_mutex_unlock(&fileMutex);
-    send(clientSocket, result, sizeof(result), 0);
-    break;
-
-
-            case 3:
+            case 2:  // Search for a string in the filesystem
+                memset(buffer, 0, sizeof(buffer));  // Clear buffer before receiving data
                 recv(clientSocket, buffer, sizeof(buffer), 0);
-                pthread_mutex_lock(&fileMutex); // Lock the mutex before accessing shared resources
-                displayFileContent(buffer, result);  // Safely access shared resources
-                pthread_mutex_unlock(&fileMutex); // Unlock the mutex after done
+                
+                memset(result, 0, sizeof(result));  // Clear result before use
+                searchForString(buffer, result);
+                
+                // Send back the search results
+                send(clientSocket, result, sizeof(result), 0);
+                
+                // Check if the result is empty (no files found) and exit early if so
+                if (strcmp(result, "") == 0) {
+                    break;
+                }
+
+                // Clear buffers again before proceeding to display file content
+                memset(buffer, 0, sizeof(buffer));
+                memset(result, 0, sizeof(result));
+
+                // Receive the file path from the client
+                recv(clientSocket, buffer, sizeof(buffer), 0);
+                
+                // If no valid file path is provided, exit
+                if (strcmp(buffer, "") == 0) {
+                    break;
+                }
+
+                // Display the file content and send it back to the client
+                displayFileContent(buffer, result);
                 send(clientSocket, result, sizeof(result), 0);
                 break;
 
-            case 4:
+            case 3:  // Display file content
+                recv(clientSocket, buffer, sizeof(buffer), 0);
+                displayFileContent(buffer, result);
+                send(clientSocket, result, sizeof(result), 0);
+                break;
+
+            case 4:  // Client exit
                 LOG_INFO("Client exiting %s", "");
                 close(clientSocket);
-                pthread_exit(NULL); // End the thread
-                return NULL;
+                pthread_mutex_lock(&client_count_lock);
+                active_clients--;
+                pthread_mutex_unlock(&client_count_lock);
+                pthread_exit(NULL);
 
             default:
-                LOG_WARN("Invalid choice from client %s", "");
+                LOG_WARN("Invalid choice received from client %s", "");
         }
     }
 
     close(clientSocket);
+    pthread_mutex_lock(&client_count_lock);
+    active_clients--;
+    pthread_mutex_unlock(&client_count_lock);
     pthread_exit(NULL);
-    return NULL;
 }
 
 int main() {
-    pthread_mutex_init(&fileMutex, NULL); // Initialize the mutex
-
     LOG_INFO("Creating Socket %s", "");
     int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
@@ -115,6 +109,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
+    LOG_INFO("Binding to port %s", "");
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
@@ -125,34 +120,62 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    if (listen(serverSocket, 5) == -1) {
+    LOG_INFO("Listening for incoming connections %s", "");
+    if (listen(serverSocket, MAX_CLIENTS) == -1) {
         LOG_FATAL("Listen failed %s", "");
         exit(EXIT_FAILURE);
     }
 
     LOG_INFO("Server listening on port %s...", "5680");
 
+    pthread_mutex_init(&client_count_lock, NULL);
+
     while (1) {
-        int* clientSocketPtr = malloc(sizeof(int)); // Allocate memory for clientSocket
-        *clientSocketPtr = accept(serverSocket, NULL, NULL);
-        if (*clientSocketPtr == -1) {
-            LOG_FATAL("Accept failed %s", "");
-            free(clientSocketPtr);
+        pthread_mutex_lock(&client_count_lock);
+        if (active_clients >= MAX_CLIENTS) {
+            pthread_mutex_unlock(&client_count_lock);
+            LOG_WARN("Maximum clients reached, waiting for a slot %s", "");
+            sleep(1);
             continue;
         }
-        LOG_INFO("Client connected %s", "");
+        pthread_mutex_unlock(&client_count_lock);
 
-        // Create a new thread for each client
-        pthread_t clientThread;
-        if (pthread_create(&clientThread, NULL, handleClient, clientSocketPtr) != 0) {
-            LOG_FATAL("Failed to create thread %s", "");
-            free(clientSocketPtr);
+        int* clientSocket = malloc(sizeof(int));
+        if (clientSocket == NULL) {
+            LOG_FATAL("Memory allocation failed %s", "");
+            continue;
         }
 
-        pthread_detach(clientThread); // Detach thread to handle client independently
+        *clientSocket = accept(serverSocket, NULL, NULL);
+        if (*clientSocket == -1) {
+            LOG_FATAL("Accept failed %s", "");
+            free(clientSocket);
+            continue;
+        }
+
+        LOG_INFO("Client connected %s", "");
+
+        pthread_mutex_lock(&client_count_lock);
+        active_clients++;
+        pthread_mutex_unlock(&client_count_lock);
+
+        pthread_t clientThread;
+        if (pthread_create(&clientThread, NULL, handleClient, clientSocket) != 0) {
+            LOG_FATAL("Failed to create thread %s", "");
+            close(*clientSocket);
+            free(clientSocket);
+
+            pthread_mutex_lock(&client_count_lock);
+            active_clients--;
+            pthread_mutex_unlock(&client_count_lock);
+        } else {
+            pthread_detach(clientThread);
+        }
     }
 
-    pthread_mutex_destroy(&fileMutex); // Destroy the mutex when done
+    LOG_INFO("Closing server socket now %s", "");
     close(serverSocket);
+    pthread_mutex_destroy(&client_count_lock);
     return 0;
-} 
+}
+
