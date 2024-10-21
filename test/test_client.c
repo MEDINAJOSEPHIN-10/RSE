@@ -18,7 +18,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "../INC/server_function.h"
+#include "../inc/server.h"
 
 // Mock functions for testing
 void mock_searchForFile(char* path, char* response) {

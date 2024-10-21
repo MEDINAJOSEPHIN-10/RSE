@@ -11,10 +11,10 @@
  *******************************************************************************/
 
 
-#include "../INC/hdr.h"
+#include "../inc/hdr.h"
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
-#include "../INC/sf_searchForFile.h"
+#include "../inc/server_searchForFile.h"
 
 // Function prototypes for test cases
 void test_searchForFile_fileExists(void);

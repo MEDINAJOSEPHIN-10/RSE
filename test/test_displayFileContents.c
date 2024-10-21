@@ -14,7 +14,7 @@
 
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
-#include "../INC/sf_displayFileContents.h"  // Adjusted path based on your structure
+#include "../inc/server_displayFileContents.h"  // Adjusted path based on your structure
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>

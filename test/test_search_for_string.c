@@ -13,8 +13,8 @@
 
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
-#include "../INC/hdr.h"
-#include "../INC/sf_searchForString.h" // Include the header
+#include "../inc/hdr.h"
+#include "../inc/server_searchForString.h" // Include the header
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>

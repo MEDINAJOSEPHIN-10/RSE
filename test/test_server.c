@@ -15,10 +15,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../INC/hdr.h"
-#include "../INC/sf_searchForFile.h"
-#include "../INC/sf_searchForString.h"
-#include "../INC/sf_displayFileContents.h"
+#include "../inc/hdr.h"
+#include "../inc/server_searchForFile.h"
+#include "../inc/server_searchForString.h"
+#include "../inc/server_displayFileContents.h"
 
 // Mock function to simulate the searchForFile function
 void test_searchForFile() {
