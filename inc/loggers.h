@@ -1,6 +1,6 @@
 /***************************************************************************
-*   DATE :
-*   AUTHOR : Group-04
+*   DATE :21/10/2024
+*   OWNER : Group-04
 *	FILENAME : loggers.h
 *	DESCRIPTION: This header file defines logging macros for different 
 *                log levels, including INFO, WARN, FATAL, and DEBUG. 

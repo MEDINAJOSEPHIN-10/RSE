@@ -1,3 +1,16 @@
+/*************************************************************************************
+ *   DATE: 21/10/2024
+ *   OWNER: Group-04
+ *   FILENAME: test_search_for_String.c
+ *   DESCRIPTION: This file contains unit tests for the `searchForString` function using 
+ *                 the CUnit testing framework. The tests validate the functionality 
+ *                under various conditions, such as when the search string is found in 
+ *                a file, not found, or when searching in an empty directory. 
+ *                Each test case ensures that the `searchForString` function behaves 
+ *                correctly and returns expected outputs.
+ ******************************************************************************/
+
+
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 #include "../INC/hdr.h"

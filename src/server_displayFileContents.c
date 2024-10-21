@@ -1,7 +1,7 @@
 /***************************************************************************
-*   DATE:
-*   AUTHOR: Group-04
-*   FILENAME : sf_displayFileContents.c
+*   DATE:21/10/2024
+*   OWNER: Group-04
+*   FILENAME : server_displayFileContents.c
 *   DESCRIPTION: Contains the code to read the contents of a file from the
 *                given file path and store them in a result buffer.
 *                If the file exists, the content is appended to the result;
@@ -9,8 +9,8 @@
 *                Logs important events such as file existence and errors.
 *****************************************************************************/
  
-#include "../INC/hdr.h"
-#include "../INC/loggers.h"
+#include "../inc/hdr.h"
+#include "../inc/loggers.h"
 #include <string.h>
  
 void displayFileContent(char* filePath, char* result) {

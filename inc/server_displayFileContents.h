@@ -1,7 +1,7 @@
 /****************************************************************************
- *   DATE :
- *   AUTHOR : Group-04
- *   FILENAME: sf_displayFileContent.h
+ *   DATE :21/10/2024 
+ *   OWNER : Group-04
+ *   FILENAME: server_displayFileContent.h
  *   DESCRIPTION: This header file declares the prototype of the 
  *                `displayFileContent` function. This function reads the contents 
  *                of a specified file and stores them in a result buffer. If the 

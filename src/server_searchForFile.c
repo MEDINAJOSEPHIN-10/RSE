@@ -1,7 +1,7 @@
 /****************************************************************************
-*   DATE :
-*   AUTHOR : GROUP-04
-*	FILENAME: sf_searchForFile.c
+*   DATE : 21/10/2024
+*   OWNER : GROUP-04
+*	FILENAME: server_searchForFile.c
 *	DESCRIPTION: Contains the code to search for a file in the filesystem 
 *	            based on the provided file path. If the file exists, 
 *	            it appends a confirmation message to the result buffer; 
@@ -10,8 +10,8 @@
 
 
 
-#include "../INC/hdr.h"
-#include "../INC/loggers.h"
+#include "../inc/hdr.h"
+#include "../inc/loggers.h"
 
 void searchForFile(char* filePath, char* result) {
     LOG_INFO("Searching for a file in filesystem with filePath - %s", filePath);

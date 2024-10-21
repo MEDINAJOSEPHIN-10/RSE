@@ -1,9 +1,21 @@
-#include "../INC/hdr.h"
-#include "../INC/server_function.h"
-#include "../INC/loggers.h"
-#include "../INC/sf_displayFileContents.h"
-#include "../INC/sf_searchForFile.h"
-#include "../INC/sf_searchForString.h"
+/*********************************************************************************&********
+ *   DATE: 21/10/2024
+ *   OWNER : Group-04
+ *   FILENAME : server.c
+ *   DESCRIPTION:  This file contains the server-side code for a multi-threaded server 
+ *                 that supports concurrent client connections. The server provides
+ *                  functionalities  like searching for files, searching for strings
+ *				   within files, and displaying file contents.  It manages multiple
+ *				   client requests using threads and ensures thread safety with mutex locks.
+ *******************************************************************************************/
+
+
+#include "../inc/hdr.h"
+#include "../inc/server.h"
+#include "../inc/loggers.h"
+#include "../inc/server_displayFileContents.h"
+#include "../inc/server_searchForFile.h"
+#include "../inc/server_searchForString.h"
 #include <pthread.h>
 
 #define MAX_CLIENTS 10

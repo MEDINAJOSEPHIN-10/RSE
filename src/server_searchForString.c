@@ -1,7 +1,7 @@
 /***************************************************************************
-*   DATE :
-*   AUTHOR : GROUP-04
-*	FILENAME: sf_searchForString.c
+*   DATE : 21/10/2024
+*   OWNER : GROUP-04
+*	FILENAME: server_searchForString.c
 *	DESCRIPTION: Contains functions to search for a specific string in files 
 *	            within a directory and its subdirectories. It utilizes 
 *	            recursion to navigate through directories and logs the search 
@@ -13,8 +13,8 @@
 
 
 
-#include "../INC/hdr.h"
-#include "../INC/loggers.h"
+#include "../inc/hdr.h"
+#include "../inc/loggers.h"
 void searchInFile(const char* filePath, const char* searchString, char* result) {
     FILE* file = fopen(filePath, "r");
     if (file != NULL) {

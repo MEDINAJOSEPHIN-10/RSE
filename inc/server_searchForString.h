@@ -1,7 +1,7 @@
 /****************************************************************************
- *   DATE :
- *   AUTHOR : Group-04
- *   FILENAME: sf_searchForString.h
+ *   DATE :21/10/2024
+ *   OWNER : Group-04
+ *   FILENAME: server_searchForString.h
  *   DESCRIPTION: This header file contains the declarations of functions
  *                used for searching a specific string within files located
  *                in a directory and its subdirectories. The functions

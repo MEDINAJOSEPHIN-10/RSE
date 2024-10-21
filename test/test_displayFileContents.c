@@ -1,3 +1,17 @@
+/************************************************************************************
+ *   DATE: 21/10/2024
+ *   OWNER: Group-04
+ *   FILENAME: test_displayFileContent.c
+ *   DESCRIPTION: This file contains unit tests for the `displayFileContent` function, 
+ *                which displays the contents of a given file or reports if the file 
+ *                does not exist. The tests are implemented using the CUnit testing 
+ *                framework. Mock files are created to simulate different scenarios such 
+ *                as a valid file with content, a non-existent file, and an empty file. 
+ *                These tests ensure that `displayFileContent` works as expected under 
+ *                various conditions.
+ ***************************************************************************************/
+
+
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 #include "../INC/sf_displayFileContents.h"  // Adjusted path based on your structure

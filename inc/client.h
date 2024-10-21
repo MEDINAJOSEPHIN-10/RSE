@@ -1,6 +1,6 @@
 /****************************************************************************
-*   DATE :
-*   AUTHOR :Group-04
+*   DATE :21/10/2024
+*   OWNER :Group-04
 *   FILENAME: client.h
 *   DESCRIPTION: This header file contains declarations for functions used
 *                in the client-side of a client-server application. It includes

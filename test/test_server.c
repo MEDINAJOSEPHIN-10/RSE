@@ -1,3 +1,15 @@
+/*******************************************************************************************
+ *   DATE: 21/10/2024
+ *   OWNER: Group-04
+ *   FILENAME: test_server.c
+ *   DESCRIPTION: This file contains unit tests for the server functions `searchForFile`, 
+ *               `searchForString`, and `displayFileContent` using the CUnit testing 
+ *                framework. The tests validate the functionality of these functions under 
+ *                various conditions, ensuring correct outputs for both existing and 
+ *                non-existing files. Each test case creates temporary test files, calls 
+ *                the respective functions, and checks the results.
+ *********************************************************************************************/
+
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 #include <stdio.h>

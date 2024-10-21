@@ -1,3 +1,16 @@
+/******************************************************************************
+ *   DATE: 21/10/2024
+ *   OWNER: Group-04
+ *   FILENAME: test_searchForFile.c
+ *   DESCRIPTION: This file contains unit tests for the `searchForFile` function using 
+ *               the CUnit testing framework. The tests validate the functionality 
+ *               under various conditions, such as when the file exists, does not exist, 
+ *               the result buffer is empty, or an invalid file path is provided. 
+ *               Each test case ensures that the `searchForFile` function behaves 
+ *               correctly and returns expected outputs.
+ *******************************************************************************/
+
+
 #include "../INC/hdr.h"
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>

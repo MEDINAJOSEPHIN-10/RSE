@@ -1,6 +1,6 @@
 #***************************************************************************
-#   DATE :
-#   AUTHOR : Group-04
+#   DATE :21/10/2024
+#   OWNER : Group-04
 #   FILENAME : make_file
 #   DESCRIPTION: This Makefile is used to compile and link the server and 
 #                 client programs for a socket-based application. It defines 
@@ -10,53 +10,52 @@
 #                 executables. The Makefile also includes rules for compiling 
 #                 individual source files and cleaning up the build artifacts.
 #****************************************************************************
-
-
-
+ 
+ 
 # Makefile for server and client programs
-
+ 
 # Directory structure
-SRCDIR = ../SRC
-INCDIR = ../INC
-BINDIR = ../BIN
-OBJDIR = ../OBJ
-
+SRCDIR = ../src
+INCDIR = ../inc
+BINDIR = ../bin
+OBJDIR = ../obj
+ 
 # Compiler and flags
 CC = gcc
 CFLAGS = -Wall -Wextra -g
 LDFLAGS = -pthread
-
+ 
 # Targets
 all: $(BINDIR)/server $(BINDIR)/client
-
+ 
 # Linking the server executable
-$(BINDIR)/server: $(OBJDIR)/server.o $(OBJDIR)/sf_searchForFile.o $(OBJDIR)/sf_searchForString.o $(OBJDIR)/sf_displayFileContents.o
+$(BINDIR)/server: $(OBJDIR)/server.o $(OBJDIR)/server_searchForFile.o $(OBJDIR)/server_searchForString.o $(OBJDIR)/server_displayFileContents.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
-
+ 
 # Linking the client executable
 $(BINDIR)/client: $(OBJDIR)/client.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
-
+ 
 # Compiling server source files
-$(OBJDIR)/server.o: $(SRCDIR)/server.c $(INCDIR)/server_function.h $(INCDIR)/loggers.h | $(BINDIR)
+$(OBJDIR)/server.o: $(SRCDIR)/server.c $(INCDIR)/server.h $(INCDIR)/loggers.h | $(BINDIR)
 	$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
-
-$(OBJDIR)/sf_searchForFile.o: $(SRCDIR)/sf_searchForFile.c $(INCDIR)/loggers.h | $(BINDIR)
+ 
+$(OBJDIR)/server_searchForFile.o: $(SRCDIR)/server_searchForFile.c $(INCDIR)/loggers.h | $(BINDIR)
 	$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
-
-$(OBJDIR)/sf_searchForString.o: $(SRCDIR)/sf_searchForString.c $(INCDIR)/loggers.h | $(BINDIR)
+ 
+$(OBJDIR)/server_searchForString.o: $(SRCDIR)/server_searchForString.c $(INCDIR)/loggers.h | $(BINDIR)
 	$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
-
-$(OBJDIR)/sf_displayFileContents.o: $(SRCDIR)/sf_displayFileContents.c $(INCDIR)/loggers.h | $(BINDIR)
+ 
+$(OBJDIR)/server_displayFileContents.o: $(SRCDIR)/server_displayFileContents.c $(INCDIR)/loggers.h | $(BINDIR)
 	$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
-
+ 
 # Compiling client source file
 $(OBJDIR)/client.o: $(SRCDIR)/client.c | $(BINDIR)
 	$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
-
+ 
 # Create the bin directory if it doesn't exist
 #$(BINDIR):mkdir -p $(BINDIR)
-
+ 
 # Clean target
 clean:
 make: *** No rule to make target 'mkdir', needed by '../BIN'.  Stop.

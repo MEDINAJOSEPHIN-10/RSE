@@ -1,7 +1,7 @@
 /****************************************************************************
- *   DATE:
- *   AUTHOR : Group-04
- *   FILENAME: server_function.h
+ *   DATE:21/10/2024
+ *   OWNER : Group-04
+ *   FILENAME: server.h
  *   DESCRIPTION: This header file declares the prototypes of core server-side 
  *                functions used for socket programming. The functions include:
  *                searching for files, locating strings within files, recursively 

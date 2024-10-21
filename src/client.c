@@ -10,33 +10,21 @@
 *               a console interface.
 *****************************************************************************/
 
-#include "../INC/hdr.h"
-#include "../INC/server_function.h"
-#include "../INC/loggers.h"
-#include "../INC/sf_displayFileContents.h"
-#include "../INC/sf_searchForFile.h"
-#include "../INC/sf_searchForString.h"
-#include <ctype.h> // For isdigit
-#include <string.h> // For strlen
+#include "../inc/hdr.h"
+#include "../inc/server.h"
+#include "../inc/loggers.h"
+#include "../inc/server_displayFileContents.h"
+#include "../inc/server_searchForFile.h"
+#include "../inc/server_searchForString.h"
 
-// Function to check if a string is a valid path (not purely numeric)
-int isValidPath(const char* path) {
-    // Check if the path is empty
-    if (path == NULL || strlen(path) == 0) {
-        return 0; // Invalid path
-    }
-
-    int hasNonDigit = 0; // Flag to check for non-digit characters
-
-    // Check each character in the path
-    for (size_t i = 0; i < strlen(path); i++) {
-        if (!isdigit(path[i]) && path[i] != '/' && path[i] != '.' && path[i] != '_' && path[i] != '-') {
-            hasNonDigit = 1; // Found a non-digit character
+// Function to check if the string is numeric
+int isNumeric(const char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isdigit(str[i])) {
+            return 0;  // Not numeric
         }
     }
-
-    // Return 1 (valid path) if there's at least one non-digit character, else return 0 (invalid path)
-    return hasNonDigit ? 1 : 0;
+    return 1;  // All characters are numeric
 }
 
 int main() {
@@ -91,29 +79,32 @@ int main() {
         send(clientSocket, &choice, sizeof(choice), 0);
 
         switch (choice) {
-            case 1: {
-                char basePath[MAX_BUFFER_SIZE] = "";
-                printf("Enter the absolute path: ");
+            case 1:
+            case 3:
+                // Both options 1 and 3 require absolute path input
                 while (1) {
-                    scanf("%s", buffer);
-                    // Check if the path is valid
-                    if (isValidPath(buffer)) {
-                        strcat(basePath, buffer);
-                        send(clientSocket, basePath, strlen(basePath) + 1, 0);
+                    printf("Enter the absolute path: ");
+                    getchar(); // clear newline from buffer
+                    scanf("%[^\n]s", buffer);
+
+                    // Check if the input is purely numeric
+                    if (isNumeric(buffer)) {
+                        printf("Invalid path. Please enter a correct absolute path (not purely numeric):\n");
+                    } else {
+                        // Valid path, send it to the server
+                        send(clientSocket, buffer, sizeof(buffer), 0);
                         recv(clientSocket, buffer, sizeof(buffer), 0);
                         printf("Server response:\n%s\n", buffer);
-                        break; // Valid path, exit the loop
-                    } else {
-                        printf("Invalid path. Please enter a correct absolute path (not purely numeric): ");
+                        break;
                     }
                 }
                 break;
-            }
-            case 2: {
+
+            case 2:
                 printf("Enter the word/sentence/pattern: ");
-                getchar();
+                getchar(); // clear newline from buffer
                 scanf("%[^\n]s", buffer);
-                send(clientSocket, buffer, strlen(buffer) + 1, 0);
+                send(clientSocket, buffer, sizeof(buffer), 0);
                 recv(clientSocket, buffer, sizeof(buffer), 0);
                 printf("Server response:\n%s", buffer);
                 if (strcmp(buffer, "") == 0) {
@@ -121,45 +112,21 @@ int main() {
                     break;
                 }
                 char case2SubChoice[5];
-                printf("\n");
-                printf("    View a file\n");
+                printf("\n    View a file\n");
                 printf("    Enter YES or NO: ");
                 scanf("%s", case2SubChoice);
-                getchar();
-                if (strcmp(case2SubChoice ,  "YES") == 0) {
+                getchar(); // clear newline from buffer
+                if (strcmp(case2SubChoice, "YES") == 0) {
                     printf("    Enter the path: ");
-                    while (1) {
-                        scanf("%[^\n]s", buffer);
-                        if (isValidPath(buffer)) {
-                            send(clientSocket, buffer, strlen(buffer) + 1, 0);
-                            recv(clientSocket, buffer, sizeof(buffer), 0);
-                            printf("Server response:\n%s\n", buffer);
-                            break; // Valid path, exit the loop
-                        } else {
-                            printf("Invalid path. Please enter a correct absolute path (not purely numeric): ");
-                        }
-                    }
+                    scanf("%[^\n]s", buffer);
+                    send(clientSocket, buffer, sizeof(buffer), 0);
+                    recv(clientSocket, buffer, sizeof(buffer), 0);
+                    printf("Server response:\n%s\n", buffer);
                 } else {
                     send(clientSocket, "", sizeof(buffer), 0);
                 }
                 break;
-            }
-            case 3: {
-                printf("Enter the absolute path: ");
-                getchar();
-                while (1) {
-                    scanf("%[^\n]s", buffer);
-                    if (isValidPath(buffer)) {
-                        send(clientSocket, buffer, strlen(buffer) + 1, 0);
-                        recv(clientSocket, buffer, sizeof(buffer), 0);
-                        printf("Server response:\n%s\n", buffer);
-                        break; // Valid path, exit the loop
-                    } else {
-                        printf("Invalid path. Please enter a correct absolute path (not purely numeric): ");
-                    }
-                }
-                break;
-            }
+
             case 4:
                 close(clientSocket);
                 exit(EXIT_SUCCESS);

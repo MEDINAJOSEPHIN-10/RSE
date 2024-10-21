@@ -1,3 +1,16 @@
+/*********************************************************************************
+ *   DATE: 21/10/2024
+ *   OWNER: Group-04
+ *   FILENAME: test_client.c
+ *   DESCRIPTION:This file contains the unit tests for various functions used in the
+ *       project. It uses the CUnit testing framework to verify the correctness 
+ *       of key operations, such as searching for files and strings. Mock 
+ *       functions are implemented to simulate behaviors of the actual functions 
+ *       during testing. Test cases validate both positive and negative scenarios 
+ *       for file and string search functionality.
+ *******************************************************************************/
+
+
 #include <CUnit/Basic.h>
 #include <CUnit/CUnit.h>
 #include <stdio.h>
