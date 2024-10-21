@@ -1,6 +1,6 @@
 /***************************************************************************
-*   DATE:
-*   AUTHOR : Group-04
+*   DATE:21/10/2024
+*   OWNER : Group-04
 *   FILENAME : client.c
 *   DESCRIPTION: Contains code for a client that connects to a server 
 *               to perform various file operations, including searching for 
